@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb   # 애플리케이션을 실행할 때마다 데이터베이스가 임시로 생성 (프로젝트를 실행할 때 별도의 데이터베이스 설정이 필요하지 않음)
+    username: sa
+    password:
+  jpa:
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    show_sql: true
+    hibernate:
+      ddl-auto: create-drop # 기본값
+
+  session:
+    store-type: jdbc
+
+
+  # 스웨거 : Spring boot 2.6버전 이후에 spring.mvc.pathmatch.matching-strategy 값이 ant_apth_matcher에서 path_pattern_parser로 변경되면서 몇몇 라이브러리에서 오류가 발생하고 있다!
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    path match:
+      matching-strategy: ant_path_matcher
