@@ -38,9 +38,11 @@
 ## 📐 Service Architecture
 
 ## 🖥️ Build Method
-- 해당 [링크](https://www.notion.so/fa997457cd2444a8848d7e68ec80dec2?pvs=4)는 운영체제별(Mac, Windows) 웹서버를 로컬에서 실행시키는 방법을 설명하고 있습니다. 
  
 ## 📝 Documentation (#Issue)
+- [프로젝트 구현 조건](https://github.com/iju1633/3o3-server/issues/3)
+- [브랜치 & 코드 & PR 관리 전략](https://github.com/iju1633/3o3-server/issues/1)
+- [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)
 
 ## 🗄️ ERD
 
