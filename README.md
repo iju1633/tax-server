@@ -1,4 +1,4 @@
-# 👕 2023, JAVA 백엔드 엔지니어 채용 Assignment
+# 👕 2023, 삼쩜삼 JAVA 백엔드 엔지니어 채용 Assignment
 
  유저의 환급액을 계산해 주는 서비스입니다.
 
@@ -53,6 +53,8 @@
 - implementation 'org.springframework.boot:spring-boot-starter-security'
 - implementation 'org.springframework.boot:spring-boot-starter-validation'
 - implementation 'org.springframework.boot:spring-boot-starter-web'
+- implementation 'io.springfox:springfox-boot-starter:3.0.0'
+- implementation 'io.jsonwebtoken:jjwt:0.9.1'
 - compileOnly 'org.projectlombok:lombok'
 - runtimeOnly 'com.h2database:h2'
 - annotationProcessor 'org.projectlombok:lombok'
