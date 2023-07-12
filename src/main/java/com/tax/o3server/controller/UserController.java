@@ -3,17 +3,22 @@ package com.tax.o3server.controller;
 import com.tax.o3server.dto.LoginDTO;
 import com.tax.o3server.dto.LoginSuccessDTO;
 import com.tax.o3server.dto.RegisterUserDTO;
+import com.tax.o3server.dto.UserDTO;
 import com.tax.o3server.entity.Users;
 import com.tax.o3server.service.UserService;
 import com.tax.o3server.util.JwtUtils;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -40,5 +45,13 @@ public class UserController {
     public ResponseEntity<LoginSuccessDTO> login(@RequestBody LoginDTO loginDTO) {
 
         return ResponseEntity.ok().body(userService.login(loginDTO));
+    }
+
+    // 유저 정보(아이디, 이름, 가입 날짜) 반환
+    @GetMapping("/szs/me")
+    @ApiOperation(value = "회원 정보 반환", notes = "회원의 서비스 로그인 아이디, 이름, 가입 날짜를 반환합니다.")
+    public ResponseEntity<UserDTO> showUserInfo(HttpServletRequest httpServletRequest) {
+
+        return ResponseEntity.ok().body(userService.showUserInfo(httpServletRequest));
     }
 }

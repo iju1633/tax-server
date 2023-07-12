@@ -31,16 +31,14 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(apiInfo())
                 .components(new Components()
-                        .addSecuritySchemes("bearerAuth", bearerAuthSecurityScheme()))
+                        .addSecuritySchemes("bearerAuth", createAPIKeyScheme()))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
     }
 
-    private SecurityScheme bearerAuthSecurityScheme() {
-        return new SecurityScheme()
-                .name("Authorization")
-                .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JWT");
+    private SecurityScheme createAPIKeyScheme() {
+        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+                .bearerFormat("JWT")
+                .scheme("bearer");
     }
 
     private Info apiInfo() {
