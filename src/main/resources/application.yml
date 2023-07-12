@@ -10,6 +10,13 @@ spring:
     show_sql: true
     hibernate:
       ddl-auto: create-drop # 기본값
+    properties:
+      hibernate.format_sql: true
+      hibernate.use_sql_comments: true
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.connection.characterEncoding: UTF-8
+      hibernate.connection.CharSet: UTF-8
+      hibernate.connection.useUnicode: true
 
   session:
     store-type: jdbc

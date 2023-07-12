@@ -1,6 +1,7 @@
 package com.tax.o3server.util;
 
 import com.tax.o3server.entity.Users;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,15 +25,15 @@ public class JwtUtils {
                 .setSubject(user.getName())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token.trim().replaceAll("\uFFFD", ""));
             return true;
-        } catch (Exception e) {
+        } catch (JwtException e) {
             return false;
         }
     }
