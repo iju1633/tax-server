@@ -19,7 +19,11 @@ public class ScrapData { // 스크랩 시, 스크랩 정보를 활용하여 계�
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 고유한 id
 
-    private String userName; // 유저 이름
-    private String 결정세액;
-    private String 퇴직연금세액공제;
+    private long 총급여;
+    private long 산출세액;
+    private long 퇴직연금납입금액;
+    private long 보험료납입금액;
+    private long 의료비납입금액;
+    private long 교육비납입금액;
+    private long 기부금납입금액;
 }
