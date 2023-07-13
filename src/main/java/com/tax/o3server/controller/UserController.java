@@ -1,17 +1,9 @@
 package com.tax.o3server.controller;
 
-import com.tax.o3server.dto.LoginDTO;
-import com.tax.o3server.dto.LoginSuccessDTO;
-import com.tax.o3server.dto.RegisterUserDTO;
-import com.tax.o3server.dto.UserDTO;
-import com.tax.o3server.entity.Users;
+import com.tax.o3server.dto.*;
 import com.tax.o3server.service.UserService;
-import com.tax.o3server.util.JwtUtils;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -53,5 +44,13 @@ public class UserController {
     public ResponseEntity<UserDTO> showUserInfo(HttpServletRequest httpServletRequest) {
 
         return ResponseEntity.ok().body(userService.showUserInfo(httpServletRequest));
+    }
+
+    // 유저 정보 스크랩
+    @PostMapping("/szs/scrap")
+    @ApiOperation(value = "유저 정보 스크랩", notes = "결정세액과 퇴직연금세액공제금액 계산에 필요한 정보를 DB에 저장합니다.")
+    public ResponseEntity<String> saveRefundInfo(HttpServletRequest httpServletRequest, @RequestBody RequestRefundDTO requestRefundDTO) {
+
+        return ResponseEntity.ok().body(userService.saveRefundInfo(httpServletRequest, requestRefundDTO));
     }
 }

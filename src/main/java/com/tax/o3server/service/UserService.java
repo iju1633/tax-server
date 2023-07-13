@@ -1,34 +1,52 @@
 package com.tax.o3server.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tax.o3server.constant.RegisterConst;
-import com.tax.o3server.dto.LoginDTO;
-import com.tax.o3server.dto.LoginSuccessDTO;
-import com.tax.o3server.dto.RegisterUserDTO;
-import com.tax.o3server.dto.UserDTO;
+import com.tax.o3server.constant.HttpClientConst;
+import com.tax.o3server.dto.*;
+import com.tax.o3server.entity.ScrapData;
 import com.tax.o3server.entity.Users;
+import com.tax.o3server.repository.ScrapDataRepository;
 import com.tax.o3server.repository.UserRepository;
 import com.tax.o3server.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ScrapDataRepository scrapDataRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     @Value("${jwt.secret}")
     private String secret;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public UserService(UserRepository userRepository, ScrapDataRepository scrapDataRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
+        this.scrapDataRepository = scrapDataRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
     }
@@ -118,11 +136,220 @@ public class UserService {
     }
 
     // 토큰과 키값으로부터 유저이름, 토큰 생성 시간, 토큰 만료 시간을 갖는 claims 반환
-    public static Claims decodeJwt(String jwt, String secret) {
+    public Claims decodeJwt(String jwt, String secret) {
 
         return Jwts.parser()
                 .setSigningKey(secret.getBytes())
                 .parseClaimsJws(jwt)
                 .getBody();
     }
+
+    // 유저 정보 스크랩
+    public String saveRefundInfo(HttpServletRequest httpServletRequest, RequestRefundDTO requestRefundDTO) {
+
+        // 토큰 검증에 문제가 있는 경우 (만료 예외)
+        if (!validateToken(httpServletRequest)) {
+            throw new IllegalArgumentException("토큰 인증에 실패하셨습니다. 로그인 후, 다시 인증해주세요.");
+        }
+
+        // jwt 토큰으로부터 요청자와 일치하는 지 검증
+        String token = httpServletRequest.getHeader("Authorization");
+        Claims claims = decodeJwt(token, secret);
+        Users user = userRepository.findByName(claims.getSubject()); // 이미 특정 정보로만 가입할 수 있기에 유일성이 확보됨
+
+        // 로그인한 회원과 요청하는 회원이 다른 경우에 대한 검증
+        if (!user.getName().equals(requestRefundDTO.getName()) || !passwordEncoder.matches(requestRefundDTO.getRegNo(), user.getRegNo())) {
+            throw new IllegalArgumentException("자신의 정보만 스크랩할 수 있습니다. 다시 시도해주세요.");
+        }
+
+        // JSON 데이터 생성
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody;
+        try {
+            requestBody = objectMapper.writeValueAsString(requestRefundDTO);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("JSON 데이터 생성 중 오류가 발생했습니다.");
+        }
+
+        // POST 요청 설정
+        String url = HttpClientConst.HTTP_CLIENT_BASE_URL + "/scrap";
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
+        httpPost.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+        httpPost.setHeader(HttpHeaders.AUTHORIZATION, token);
+        httpPost.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
+
+        // POST 요청 보내기
+        HttpResponse response;
+        try {
+            response = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("POST 요청 중 오류가 발생했습니다.");
+        }
+
+        // 응답 처리
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode == 200) {
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String responseBody;
+                try {
+                    responseBody = EntityUtils.toString(entity);
+                } catch (IOException e) {
+                    throw new IllegalArgumentException("응답 데이터를 읽는 중 오류가 발생했습니다.");
+                }
+
+                // JSON 응답 파싱
+                try {
+                    ObjectMapper responseMapper = new ObjectMapper();
+                    ResponseData responseData = responseMapper.readValue(responseBody, ResponseData.class);
+
+                    // status 값 확인
+                    if ("success".equals(responseData.getStatus())) {
+
+                        // 엔티티에 값을 저장하는 로직을 구현해주세요.
+                        JsonList jsonList = responseData.getData().getJsonList();
+                        System.out.println("jsonList" + jsonList);
+
+                        double 산출세액 = Double.parseDouble(jsonList.get산출세액().replaceAll(",", ""));
+                        double 총급여 = Double.parseDouble(jsonList.get급여().get(0).총지급액.replaceAll(",", ""));
+
+                        List<SodukGongje> 소득공제 = jsonList.get소득공제();
+                        double 보험료납입금액 = Double.parseDouble(소득공제.get(0).get금액().replaceAll(",", ""));
+                        double 교육비납입금액 = Double.parseDouble(소득공제.get(1).get금액().replaceAll(",", ""));
+                        double 기부금납입금액 = Double.parseDouble(소득공제.get(2).get금액().replaceAll(",", ""));
+                        double 의료비납입금액 = Double.parseDouble(소득공제.get(3).get금액().replaceAll(",", ""));
+                        double 퇴직연금납입금액 = Double.parseDouble(소득공제.get(4).get총납임금액().replaceAll(",", ""));
+
+                        // 결정세액 계산에 필요한 필드 값 계산 -> 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연금세액공제금액
+                        double 근로소득세액공제금액 = 산출세액 * 0.55;
+
+                        // 특별세액공제금액 계산
+                        double 보험료공제금액 = 보험료납입금액 * 0.12;
+                        double 의료비공제금액 = (의료비납입금액 - 총급여 * 0.03) * 0.15;
+                        if (의료비공제금액 < 0) {
+                            의료비공제금액 = 0;
+                        }
+                        double 교육비공제금액 = 교육비납입금액 * 0.15;
+                        double 기부금공제금액 = 기부금납입금액 * 0.15;
+                        double 특별세액공제금액 = 보험료공제금액 + 의료비공제금액 + 교육비공제금액 + 기부금공제금액;
+
+                        // 표준세액공제금액 계산
+                        double 표준세액공제금액;
+                        if (특별세액공제금액 < 130000) {
+                            표준세액공제금액 = 130000;
+                            특별세액공제금액 = 0;
+                        } else {
+                            표준세액공제금액 = 0;
+                        }
+
+                        // 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연금세액공제금액
+                        double 퇴직연급세액공제 = 퇴직연금납입금액 * 0.15;
+                        double 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연급세액공제;
+                        if (결정세액 < 0) {
+                            결정세액 = 0;
+                        }
+
+                        // 엔티티 생성
+                        ScrapData newScrapData = ScrapData.builder()
+                                .userName(user.getName())
+                                .결정세액(formatNumber((long) 결정세액))
+                                .퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제))
+                                .build();
+
+                        // 엔티티 저장 + 이미 데이터가 저장되어 있는 경우, 갱신
+                        List<ScrapData> scrapDataList = scrapDataRepository.findAll();
+                        if (scrapDataList.size() > 0) {
+                            ScrapData scrapData = scrapDataList.get(0);
+                            scrapData.set결정세액(formatNumber((long) 결정세액));
+                            scrapData.set퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제));
+
+                            scrapDataRepository.save(scrapData);
+
+                            System.out.println("새로 갱신된 스크랩 데이터 : " + scrapData);
+                        } else {
+                            scrapDataRepository.save(newScrapData);
+
+                            System.out.println("새로 저장된 스크랩 데이터 : " + newScrapData);
+                        }
+                    } else {
+                        throw new IllegalArgumentException("스크랩 도중 에러가 발생했습니다. 다시 시도해주세요.");
+                    }
+                } catch (IOException e) {
+                    throw new IllegalArgumentException("응답 데이터 파싱 중 오류가 발생했습니다.", e);
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("서버에서 오류 응답을 받았습니다. 상태 코드: " + statusCode);
+        }
+
+        // 필요한 경우 응답 데이터를 반환하도록 구현해주세요.
+        return "success !!!";
+    }
+
+    // 엔티티 클래스
+    @Getter
+    @Setter
+    static class ResponseData {
+        private String status;
+        private Data data;
+        private Errors errors;
+    }
+
+    @Getter
+    @Setter
+    static class Data {
+        private JsonList jsonList;
+        private String appVer;
+        private String errMsg;
+        private String company;
+        private String svcCd;
+        private String hostNm;
+        private String workerResDt;
+        private String workerReqDt;
+    }
+
+    @Getter
+    @Setter
+    static class JsonList {
+        private List<Gyupyeo> 급여;
+        private String 산출세액;
+        private List<SodukGongje> 소득공제;
+    }
+
+    @Getter
+    @Setter
+    static class Gyupyeo {
+        private String 소득내역;
+        private String 총지급액;
+        private String 업무시작일;
+        private String 기업명;
+        private String 이름;
+        private String 지급일;
+        private String 업무종료일;
+        private String 주민등록번호;
+        private String 소득구분;
+        private String 사업자등록번호;
+    }
+
+    @Getter
+    @Setter
+    static class SodukGongje {
+        private String 금액;
+        private String 소득구분;
+        private String 총납임금액;
+    }
+
+    @Getter
+    @Setter
+    static class Errors {
+    }
+
+    // long 값에 세자리마다 ,(콤마)를 넣어 String으로 반환하는 함수
+    public String formatNumber(long number) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(number);
+    }
 }
+

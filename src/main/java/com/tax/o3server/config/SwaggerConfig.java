@@ -44,8 +44,8 @@ public class SwaggerConfig {
     private Info apiInfo() {
         return new Info()
                 .title("삼쩜삼")
-                .description("로그인 성공 시 토큰을 생성되어 Authorize라 쓰인 초록색 버튼에 accessToken을 입력해 인증을 진행합니다.\n" +
-                        "accessToken의 지속시간은 1분입니다."
+                .description("로그인 성공 시 토큰을 생성되어 Authorize라 쓰인 초록색 버튼에 token 값을 입력해 인증을 진행합니다.\n" +
+                        "token의 지속시간은 1분입니다."
                 );
     }
 
