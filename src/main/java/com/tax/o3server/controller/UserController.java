@@ -48,7 +48,7 @@ public class UserController { // rest api 정의
 
     // 회원 정보 스크랩
     @PostMapping("/szs/scrap")
-    @ApiOperation(value = "회원 정보 스크랩", notes = "결정세액과 퇴직연금세액공제금액을 계산하여 회원 정보와 함께 DB에 저장합니다.")
+    @ApiOperation(value = "회원 정보 스크랩", notes = "결정세액과 퇴직연금세액공제금액을 계산하는데 필요한 값을 DB에 저장합니다.")
     public ResponseEntity<Void> saveRefundInfo(HttpServletRequest httpServletRequest, @RequestBody RequestRefundDTO requestRefundDTO) {
 
         userService.saveRefundInfo(httpServletRequest, requestRefundDTO);
@@ -57,7 +57,7 @@ public class UserController { // rest api 정의
 
     // 회원 환급 정보 반환
     @GetMapping("/szs/refund")
-    @ApiOperation(value = "회원 환급 정보 반환", notes = "회원의 이름, 결정세액, 퇴직연금세액공제금액을 반환합니다.")
+    @ApiOperation(value = "회원 환급 정보 반환", notes = "계산식을 적용하여 결정세액과 퇴직연금세액공제금액을 계산한 후, 회원의 이름과 함께 이를 반환합니다.")
     public ResponseEntity<RefundDTO> showUserRefundInfo(HttpServletRequest httpServletRequest) {
 
         return ResponseEntity.ok().body(userService.showUserRefundInfo(httpServletRequest));

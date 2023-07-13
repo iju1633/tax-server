@@ -207,57 +207,44 @@ public class UserService { // 유저 관련 서비스 로직 구현
                         // 엔티티에 값을 저장하는 로직을 구현해주세요.
                         JsonList jsonList = responseData.getData().getJsonList();
 
-                        double 산출세액 = Double.parseDouble(jsonList.get산출세액().replaceAll(",", ""));
-                        double 총급여 = Double.parseDouble(jsonList.get급여().get(0).총지급액.replaceAll(",", ""));
+                        long 산출세액 = Long.parseLong(jsonList.get산출세액().replaceAll(",", ""));
+                        long 총급여 = Long.parseLong(jsonList.get급여().get(0).총지급액.replaceAll(",", ""));
 
                         List<SodukGongje> 소득공제 = jsonList.get소득공제();
-                        double 보험료납입금액 = Double.parseDouble(소득공제.get(0).get금액().replaceAll(",", ""));
-                        double 교육비납입금액 = Double.parseDouble(소득공제.get(1).get금액().replaceAll(",", ""));
-                        double 기부금납입금액 = Double.parseDouble(소득공제.get(2).get금액().replaceAll(",", ""));
-                        double 의료비납입금액 = Double.parseDouble(소득공제.get(3).get금액().replaceAll(",", ""));
-                        double 퇴직연금납입금액 = Double.parseDouble(소득공제.get(4).get총납임금액().replaceAll(",", ""));
-
-                        // 결정세액 계산에 필요한 필드 값 계산 -> 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연금세액공제금액
-                        double 근로소득세액공제금액 = 산출세액 * 0.55;
-
-                        // 특별세액공제금액 계산
-                        double 보험료공제금액 = 보험료납입금액 * 0.12;
-                        double 의료비공제금액 = (의료비납입금액 - 총급여 * 0.03) * 0.15;
-                        if (의료비공제금액 < 0) {
-                            의료비공제금액 = 0;
-                        }
-                        double 교육비공제금액 = 교육비납입금액 * 0.15;
-                        double 기부금공제금액 = 기부금납입금액 * 0.15;
-                        double 특별세액공제금액 = 보험료공제금액 + 의료비공제금액 + 교육비공제금액 + 기부금공제금액;
-
-                        // 표준세액공제금액 계산
-                        double 표준세액공제금액;
-                        if (특별세액공제금액 < 130000) {
-                            표준세액공제금액 = 130000;
-                            특별세액공제금액 = 0;
-                        } else {
-                            표준세액공제금액 = 0;
-                        }
-
-                        // 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연금세액공제금액
-                        double 퇴직연급세액공제 = 퇴직연금납입금액 * 0.15;
-                        double 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연급세액공제;
-                        if (결정세액 < 0) {
-                            결정세액 = 0;
-                        }
+                        long 보험료납입금액 = Long.parseLong(소득공제.get(0).get금액().replaceAll(",", ""));
+                        long 교육비납입금액 = Long.parseLong(소득공제.get(1).get금액().replaceAll(",", ""));
+                        long 기부금납입금액 = Long.parseLong(소득공제.get(2).get금액().replaceAll(",", ""));
+                        long 의료비납입금액 = Long.parseLong(소득공제.get(3).get금액().replaceAll(",", ""));
+                        long 퇴직연금납입금액 = Long.parseLong(소득공제.get(4).get총납임금액().replaceAll(",", ""));
 
                         // 엔티티 생성
-                        ScrapData newScrapData = ScrapData.builder().userName(user.getName()).결정세액(formatNumber((long) 결정세액)).퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제)).build();
+                        ScrapData newScrapData = ScrapData.builder()
+                                .총급여(총급여)
+                                .산출세액(산출세액)
+                                .퇴직연금납입금액(퇴직연금납입금액)
+                                .보험료납입금액(보험료납입금액)
+                                .의료비납입금액(의료비납입금액)
+                                .교육비납입금액(교육비납입금액)
+                                .기부금납입금액(기부금납입금액)
+                                .build();
 
-                        // 엔티티 저장 + 이미 데이터가 저장되어 있는 경우, 갱신
+                        // 엔티티 저장
                         List<ScrapData> scrapDataList = scrapDataRepository.findAll();
-                        if (scrapDataList.size() > 0) {
-                            ScrapData scrapData = scrapDataList.get(0);
-                            scrapData.set결정세액(formatNumber((long) 결정세액));
-                            scrapData.set퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제));
+                        if (scrapDataList.size() == 1) { // 기존에 스크랩 데이터가 저장되어 있는 경우, 갱신
+                            ScrapData existingScrapData = scrapDataList.get(0);
+                            existingScrapData.set총급여(총급여);
+                            existingScrapData.set산출세액(산출세액);
+                            existingScrapData.set퇴직연금납입금액(퇴직연금납입금액);
+                            existingScrapData.set보험료납입금액(보험료납입금액);
+                            existingScrapData.set의료비납입금액(의료비납입금액);
+                            existingScrapData.set교육비납입금액(교육비납입금액);
+                            existingScrapData.set기부금납입금액(기부금납입금액);
 
-                            scrapDataRepository.save(scrapData);
-                        } else {
+                            scrapDataRepository.save(existingScrapData);
+                        } else if (scrapDataList.size() > 1) { // 스크랩 데이터가 2개 이상 있는 경우, 일괄 삭제 후 삽입
+                            scrapDataRepository.deleteAll();
+                            scrapDataRepository.save(newScrapData);
+                        } else { // 데이터가 하나도 없는 경우, 삽입
                             scrapDataRepository.save(newScrapData);
                         }
                     } else {
@@ -268,7 +255,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
                 }
             }
         } else {
-            throw new IllegalArgumentException("서버에서 오류 응답을 받았습니다.");
+            throw new IllegalArgumentException("서버에서 오류 응답을 받았습니다. 다시 시도해주세요.");
         }
     }
 
@@ -296,11 +283,51 @@ public class UserService { // 유저 관련 서비스 로직 구현
             throw new IllegalArgumentException("환급 정보 반환 중 에러가 발생했습니다. 다시 시도해주세요.");
         }
 
+        // 계산식에 필요한 필드값 불러오기
+        ScrapData scrapData = scrapDataList.get(0);
+        long 총급여 = scrapData.get총급여();
+        long 산출세액 = scrapData.get산출세액();
+        long 퇴직연금납입금액 = scrapData.get퇴직연금납입금액();
+        long 보험료납입금액 = scrapData.get보험료납입금액();
+        long 의료비납입금액 = scrapData.get의료비납입금액();
+        long 교육비납입금액 = scrapData.get교육비납입금액();
+        long 기부금납입금액 = scrapData.get기부금납입금액();
+
+        // 계산식 적용
+        // 결정세액 계산에 필요한 필드 값 계산 -> 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연금세액공제금액
+        double 근로소득세액공제금액 = 산출세액 * 0.55;
+
+        // 특별세액공제금액 계산
+        double 보험료공제금액 = 보험료납입금액 * 0.12;
+        double 의료비공제금액 = (의료비납입금액 - 총급여 * 0.03) * 0.15;
+        if (의료비공제금액 < 0) {
+            의료비공제금액 = 0;
+        }
+        double 교육비공제금액 = 교육비납입금액 * 0.15;
+        double 기부금공제금액 = 기부금납입금액 * 0.15;
+        double 특별세액공제금액 = 보험료공제금액 + 의료비공제금액 + 교육비공제금액 + 기부금공제금액;
+
+        // 표준세액공제금액 계산
+        double 표준세액공제금액;
+        if (특별세액공제금액 < 130000) {
+            표준세액공제금액 = 130000;
+            특별세액공제금액 = 0;
+        } else {
+            표준세액공제금액 = 0;
+        }
+
+        // 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연금세액공제금액
+        double 퇴직연급세액공제 = 퇴직연금납입금액 * 0.15;
+        double 결정세액 = 산출세액 - 근로소득세액공제금액 - 특별세액공제금액 - 표준세액공제금액 - 퇴직연급세액공제;
+        if (결정세액 < 0) {
+            결정세액 = 0;
+        }
+
         // 반환할 환급 정보를 dto에 세팅
         RefundDTO refundDTO = new RefundDTO();
         refundDTO.set이름(user.getName());
-        refundDTO.set결정세액(scrapDataList.get(0).get결정세액());
-        refundDTO.set퇴직연금세액공제금액(scrapDataList.get(0).get퇴직연금세액공제());
+        refundDTO.set결정세액(formatNumber((long) 결정세액));
+        refundDTO.set퇴직연금세액공제금액(formatNumber((long) 퇴직연급세액공제));
 
         // 환급 정보 반환
         return refundDTO;
