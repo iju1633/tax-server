@@ -54,4 +54,12 @@ public class UserController {
         userService.saveRefundInfo(httpServletRequest, requestRefundDTO);
         return ResponseEntity.ok().build();
     }
+
+    // 회원 환급 정보 반환
+    @GetMapping("/szs/refund")
+    @ApiOperation(value = "회원 환급 정보 반환", notes = "회원의 이름, 결정세액, 퇴직연금세액공제을 반환합니다.")
+    public ResponseEntity<RefundDTO> showUserRefundInfo(HttpServletRequest httpServletRequest) {
+
+        return ResponseEntity.ok().body(userService.showUserRefundInfo(httpServletRequest));
+    }
 }
