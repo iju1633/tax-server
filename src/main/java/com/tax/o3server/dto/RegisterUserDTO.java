@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class RegisterUserDTO {
+public class RegisterUserDTO { // 회원가입 시 사용
 
     @NotBlank(message = "아이디를 기입해주세요.")
     @ApiModelProperty(value = "서비스 로그인 아이디", example = "garfield", required = true)

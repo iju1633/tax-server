@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-public class UserController {
+public class UserController { // rest api 정의
 
     private final UserService userService;
 
@@ -23,14 +23,14 @@ public class UserController {
 
     // 유저 회원가입
     @PostMapping("/szs/signup")
-    @ApiOperation(value = "회원 가입", notes = "회원가입을 진행합니다.\n모든 필드 값은 null 이 될 수 없습니다.\n 특정 유저만 회원가입이 가능합니다.")
+    @ApiOperation(value = "회원 가입", notes = "회원가입을 진행합니다.\n모든 필드 값은 null 이 될 수 없습니다.\n 특정 정보로만 회원가입이 가능합니다.")
     public ResponseEntity<Void> registerUser(@Validated @RequestBody RegisterUserDTO registerUserDTO) {
 
         userService.registerUser(registerUserDTO);
         return ResponseEntity.ok().build();
     }
 
-    // 유저 로그인
+    // 회원 로그인
     @PostMapping("/szs/login")
     @ApiOperation(value = "로그인", notes = "아이디와 비밀번호를 받아 로그인을 진행합니다.\n로그인 성공 시, 토큰을 반환합니다.")
     public ResponseEntity<LoginSuccessDTO> login(@RequestBody LoginDTO loginDTO) {
@@ -38,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.login(loginDTO));
     }
 
-    // 유저 정보(아이디, 이름, 가입 날짜) 반환
+    // 회원 정보(아이디, 이름, 가입 날짜) 반환
     @GetMapping("/szs/me")
     @ApiOperation(value = "회원 정보 반환", notes = "회원의 서비스 로그인 아이디, 이름, 가입 날짜를 반환합니다.")
     public ResponseEntity<UserDTO> showUserInfo(HttpServletRequest httpServletRequest) {
@@ -46,9 +46,9 @@ public class UserController {
         return ResponseEntity.ok().body(userService.showUserInfo(httpServletRequest));
     }
 
-    // 유저 정보 스크랩
+    // 회원 정보 스크랩
     @PostMapping("/szs/scrap")
-    @ApiOperation(value = "유저 정보 스크랩", notes = "결정세액과 퇴직연금세액공제금액 계산에 필요한 정보를 DB에 저장합니다.")
+    @ApiOperation(value = "회원 정보 스크랩", notes = "결정세액과 퇴직연금세액공제금액을 계산하여 회원 정보와 함께 DB에 저장합니다.")
     public ResponseEntity<Void> saveRefundInfo(HttpServletRequest httpServletRequest, @RequestBody RequestRefundDTO requestRefundDTO) {
 
         userService.saveRefundInfo(httpServletRequest, requestRefundDTO);
@@ -57,7 +57,7 @@ public class UserController {
 
     // 회원 환급 정보 반환
     @GetMapping("/szs/refund")
-    @ApiOperation(value = "회원 환급 정보 반환", notes = "회원의 이름, 결정세액, 퇴직연금세액공제을 반환합니다.")
+    @ApiOperation(value = "회원 환급 정보 반환", notes = "회원의 이름, 결정세액, 퇴직연금세액공제금액을 반환합니다.")
     public ResponseEntity<RefundDTO> showUserRefundInfo(HttpServletRequest httpServletRequest) {
 
         return ResponseEntity.ok().body(userService.showUserRefundInfo(httpServletRequest));

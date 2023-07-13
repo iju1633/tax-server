@@ -2,8 +2,8 @@ package com.tax.o3server.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tax.o3server.constant.HttpClientConst;
 import com.tax.o3server.constant.RegisterConst;
+import com.tax.o3server.constant.ScrapConst;
 import com.tax.o3server.dto.*;
 import com.tax.o3server.entity.ScrapData;
 import com.tax.o3server.entity.Users;
@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService { // 유저 관련 서비스 로직 구현
 
     private final UserRepository userRepository;
     private final ScrapDataRepository scrapDataRepository;
@@ -169,7 +169,7 @@ public class UserService {
         }
 
         // POST 요청 설정
-        String url = HttpClientConst.HTTP_CLIENT_BASE_URL + "/scrap";
+        String url = ScrapConst.HTTP_CLIENT_BASE_URL + "/scrap";
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
@@ -206,7 +206,6 @@ public class UserService {
 
                         // 엔티티에 값을 저장하는 로직을 구현해주세요.
                         JsonList jsonList = responseData.getData().getJsonList();
-                        System.out.println("jsonList" + jsonList);
 
                         double 산출세액 = Double.parseDouble(jsonList.get산출세액().replaceAll(",", ""));
                         double 총급여 = Double.parseDouble(jsonList.get급여().get(0).총지급액.replaceAll(",", ""));
@@ -258,12 +257,8 @@ public class UserService {
                             scrapData.set퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제));
 
                             scrapDataRepository.save(scrapData);
-
-                            System.out.println("새로 갱신된 스크랩 데이터 : " + scrapData);
                         } else {
                             scrapDataRepository.save(newScrapData);
-
-                            System.out.println("새로 저장된 스크랩 데이터 : " + newScrapData);
                         }
                     } else {
                         throw new IllegalArgumentException("스크랩 도중 에러가 발생했습니다. 다시 시도해주세요.");
@@ -305,13 +300,13 @@ public class UserService {
         RefundDTO refundDTO = new RefundDTO();
         refundDTO.set이름(user.getName());
         refundDTO.set결정세액(scrapDataList.get(0).get결정세액());
-        refundDTO.set퇴직연금세액공제(scrapDataList.get(0).get퇴직연금세액공제());
+        refundDTO.set퇴직연금세액공제금액(scrapDataList.get(0).get퇴직연금세액공제());
 
         // 환급 정보 반환
         return refundDTO;
     }
 
-    // 엔티티 클래스
+    // 스크랩 시 필요한 클래스 정의
     @Getter
     @Setter
     static class ResponseData {
@@ -369,7 +364,7 @@ public class UserService {
     static class Errors {
     }
 
-    // long 값에 세자리마다 ,(콤마)를 넣어 String으로 반환하는 함수
+    // long 값에 세자리마다 ,(콤마)를 넣어 String 형식으로 반환
     public String formatNumber(long number) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         return decimalFormat.format(number);

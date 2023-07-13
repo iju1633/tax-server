@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class Users {
+public class Users { // 회원가입 시, 유저의 정보를 담을 엔티티
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,6 @@ public class Users {
     private String name; // 사용자 이름
     private String regNo; // 사용자 주민번호
 
-    @Column(updatable = false) // 한 번 생성이 되고 나서는 수정되면 안된다
+    @Column(updatable = false) // 한 번 생성이 되고 나서는 수정되면 안됨
     private String registerDate;
 }
