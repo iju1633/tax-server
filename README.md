@@ -49,7 +49,8 @@
 ## 🗄️ ERD
 
 ## 📃 API Documentation
-- 이 프로젝트는 클라이언트와의 통신을 위해 swagger Specification 2.0 및 Swagger UI를 활용합니다.  
+<img width="1415" alt="스크린샷 2023-07-13 오후 8 00 16" src="https://github.com/iju1633/3o3-server/assets/43805087/8db352e3-d71f-4d41-aae9-04bf3ad3398a">
+* 이 프로젝트는 클라이언트와의 통신을 위해 swagger Specification 2.0 및 Swagger UI를 활용합니다.  
 
 ## 🏛️ Depedency Used
 - implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
