@@ -138,10 +138,7 @@ public class UserService {
     // 토큰과 키값으로부터 유저이름, 토큰 생성 시간, 토큰 만료 시간을 갖는 claims 반환
     public Claims decodeJwt(String jwt, String secret) {
 
-        return Jwts.parser()
-                .setSigningKey(secret.getBytes())
-                .parseClaimsJws(jwt)
-                .getBody();
+        return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwt).getBody();
     }
 
     // 유저 정보 스크랩
@@ -185,7 +182,7 @@ public class UserService {
         try {
             response = httpClient.execute(httpPost);
         } catch (IOException e) {
-            throw new IllegalArgumentException("POST 요청 중 오류가 발생했습니다.");
+            throw new IllegalArgumentException("요청 중 오류가 발생했습니다.");
         }
 
         // 응답 처리
@@ -251,11 +248,7 @@ public class UserService {
                         }
 
                         // 엔티티 생성
-                        ScrapData newScrapData = ScrapData.builder()
-                                .userName(user.getName())
-                                .결정세액(formatNumber((long) 결정세액))
-                                .퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제))
-                                .build();
+                        ScrapData newScrapData = ScrapData.builder().userName(user.getName()).결정세액(formatNumber((long) 결정세액)).퇴직연금세액공제(formatNumber((long) 퇴직연급세액공제)).build();
 
                         // 엔티티 저장 + 이미 데이터가 저장되어 있는 경우, 갱신
                         List<ScrapData> scrapDataList = scrapDataRepository.findAll();
@@ -282,6 +275,40 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("서버에서 오류 응답을 받았습니다.");
         }
+    }
+
+    // 회원 환급 정보 반환
+    public RefundDTO showUserRefundInfo(HttpServletRequest httpServletRequest) {
+
+        // 토큰 검증에 문제가 있는 경우 (만료 예외)
+        if (!validateToken(httpServletRequest)) {
+            throw new IllegalArgumentException("토큰 인증에 실패하셨습니다. 로그인 후, 다시 인증해주세요.");
+        }
+
+        // jwt 토큰으로부터 요청자와 일치하는 지 검증
+        String token = httpServletRequest.getHeader("Authorization");
+        Claims claims = decodeJwt(token, secret);
+        Users user = userRepository.findByName(claims.getSubject()); // 이미 특정 정보로만 가입할 수 있기에 유일성이 확보됨
+
+        // 로그인한 사용자와 요청하는 사용자가 동일한지를 확인
+        if (!user.getName().equals(claims.getSubject())) {
+            throw new IllegalArgumentException("자신의 정보만 조회할 수 있습니다. 다시 시도해주세요.");
+        }
+
+        // 환급 정보가 없거나 오류로 2개 이상인 경우를 검증
+        List<ScrapData> scrapDataList = scrapDataRepository.findAll();
+        if (scrapDataList.size() != 1) {
+            throw new IllegalArgumentException("환급 정보 반환 중 에러가 발생했습니다. 다시 시도해주세요.");
+        }
+
+        // 반환할 환급 정보를 dto에 세팅
+        RefundDTO refundDTO = new RefundDTO();
+        refundDTO.set이름(user.getName());
+        refundDTO.set결정세액(scrapDataList.get(0).get결정세액());
+        refundDTO.set퇴직연금세액공제(scrapDataList.get(0).get퇴직연금세액공제());
+
+        // 환급 정보 반환
+        return refundDTO;
     }
 
     // 엔티티 클래스
@@ -348,4 +375,3 @@ public class UserService {
         return decimalFormat.format(number);
     }
 }
-
