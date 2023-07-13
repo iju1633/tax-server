@@ -2,8 +2,8 @@ package com.tax.o3server.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tax.o3server.constant.RegisterConst;
 import com.tax.o3server.constant.HttpClientConst;
+import com.tax.o3server.constant.RegisterConst;
 import com.tax.o3server.dto.*;
 import com.tax.o3server.entity.ScrapData;
 import com.tax.o3server.entity.Users;
@@ -145,7 +145,7 @@ public class UserService {
     }
 
     // 유저 정보 스크랩
-    public String saveRefundInfo(HttpServletRequest httpServletRequest, RequestRefundDTO requestRefundDTO) {
+    public void saveRefundInfo(HttpServletRequest httpServletRequest, RequestRefundDTO requestRefundDTO) {
 
         // 토큰 검증에 문제가 있는 경우 (만료 예외)
         if (!validateToken(httpServletRequest)) {
@@ -199,7 +199,6 @@ public class UserService {
                 } catch (IOException e) {
                     throw new IllegalArgumentException("응답 데이터를 읽는 중 오류가 발생했습니다.");
                 }
-
                 // JSON 응답 파싱
                 try {
                     ObjectMapper responseMapper = new ObjectMapper();
@@ -281,11 +280,8 @@ public class UserService {
                 }
             }
         } else {
-            throw new IllegalArgumentException("서버에서 오류 응답을 받았습니다. 상태 코드: " + statusCode);
+            throw new IllegalArgumentException("서버에서 오류 응답을 받았습니다.");
         }
-
-        // 필요한 경우 응답 데이터를 반환하도록 구현해주세요.
-        return "success !!!";
     }
 
     // 엔티티 클래스

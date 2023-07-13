@@ -49,8 +49,9 @@ public class UserController {
     // 유저 정보 스크랩
     @PostMapping("/szs/scrap")
     @ApiOperation(value = "유저 정보 스크랩", notes = "결정세액과 퇴직연금세액공제금액 계산에 필요한 정보를 DB에 저장합니다.")
-    public ResponseEntity<String> saveRefundInfo(HttpServletRequest httpServletRequest, @RequestBody RequestRefundDTO requestRefundDTO) {
+    public ResponseEntity<Void> saveRefundInfo(HttpServletRequest httpServletRequest, @RequestBody RequestRefundDTO requestRefundDTO) {
 
-        return ResponseEntity.ok().body(userService.saveRefundInfo(httpServletRequest, requestRefundDTO));
+        userService.saveRefundInfo(httpServletRequest, requestRefundDTO);
+        return ResponseEntity.ok().build();
     }
 }
