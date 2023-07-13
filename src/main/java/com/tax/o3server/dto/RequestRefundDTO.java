@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class RequestRefundDTO {
+public class RequestRefundDTO { // 스크랩 요청 시 사용
 
     @NotBlank(message = "이름을 기입해주세요.")
     @ApiModelProperty(value = "유저 이름", example = "홍길동", required = true)
