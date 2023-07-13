@@ -47,6 +47,7 @@
 - [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)
 
 ## 🗄️ ERD
+<img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/3o3-server/assets/43805087/21a54ae1-312f-444d-98d0-97823d795213">
 
 ## 📃 API Documentation
 <img width="1415" alt="스크린샷 2023-07-13 오후 8 00 16" src="https://github.com/iju1633/3o3-server/assets/43805087/8db352e3-d71f-4d41-aae9-04bf3ad3398a">
