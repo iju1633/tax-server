@@ -56,16 +56,18 @@ public class UserService { // 유저 관련 서비스 로직 구현
     @Transactional
     public void registerUser(RegisterUserDTO registerUserDTO) {
 
-        if (userRepository.existsByUserId(registerUserDTO.getUserId())) {
-            throw new IllegalArgumentException("이미 가입된 유저입니다.");
-        }
-
+        // 회원가입에 필요한 필드 세팅
         String name = registerUserDTO.getName();
         String regNo = registerUserDTO.getRegNo();
 
         // 유저 회원가입 가능 목록으로 회원가입 가능 여부 판단
         if (!RegisterConst.ALLOWED_USERS.containsKey(name) || !RegisterConst.ALLOWED_USERS.get(name).equals(regNo)) {
             throw new IllegalArgumentException("회원가입할 수 없는 정보입니다.");
+        }
+
+        // 이미 가입된 회원인 지 검증
+        if (userRepository.existsByUserId(registerUserDTO.getUserId())) {
+            throw new IllegalArgumentException("이미 가입된 유저입니다.");
         }
 
         // dto -> entity
