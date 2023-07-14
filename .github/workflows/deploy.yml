@@ -1,0 +1,28 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master # 어떤 브랜치에 이벤트 등록할 건지 명시
+    paths-ignore:
+      - 'README.md' # 빈번한 자동 배포를 위해 제외
+
+jobs:
+  SSH:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run scripts in EC2 server
+        uses: appleboy/ssh-action@master # 원격 서버에 SSH를 통해 접속하고, 지정된 스크립트를 실행하는 기능을 제공
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # repository에 저장할 키 변수명
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ${{ secrets.SSH_USER }}
+          script: |
+            sudo docker stop shop-server-container # 실행 중인 도커 컨테이너 중지
+            sudo docker rm shop-server-container # 기존 도커 컨테이너 삭제
+            cd shop-server
+            git pull # 코드 갱신
+            sudo docker build -t shop-server:latest . # 도커 이미지 빌드
+            sudo docker run -d --name shop-server-container -p 8080:8080 shop-server:latest # 도커 컨테이너 생성 및 백그라운드로 배포
