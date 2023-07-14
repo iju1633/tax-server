@@ -1,11 +1,13 @@
 # 👕 2023, 삼쩜삼 JAVA 백엔드 엔지니어 채용 Assignment
 
-회원의 환급액을 계산해주는 서비스입니다.
+[Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)  
+회원의 정보를 스크랩하여 환급 정보를 반환하는 서비스를 제공합니다.
 
 ## 💪 Skill Stack
 ![Java](https://img.shields.io/badge/Java-007396.svg?&style=for-the-badge&logo=JAVA&logoColor=white)
 ![Spring-Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=Spring-Boot&logoColor=white)
 ![H2](https://img.shields.io/badge/H2-4479A1.svg?&style=for-the-badge&logo=H2&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-0DB7ED?style=for-the-badge&logo=Docker&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-66E851?style=for-the-badge&logo=Swagger&logoColor=white)
 ![EC2](https://img.shields.io/badge/Amazon_EC2-FF9900?style=for-the-badge&logo=Amazon-EC2&logoColor=white)
 ![Linux](https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
@@ -122,9 +124,15 @@
 
 ## 💎 Main Features
 - `Spring Boot` 애플리케이션으로 구성된 HTTP REST API 서버
+- `Amazon EC2`와 `Docker`를 사용한 배포
 - 다른 사람이 프로젝트 코드를 다운로드하고 실행할 때 H2 Embedded DB를 사용할 수 있으며, **추가적인 설정이나 외부 데이터베이스 연결 없이** 애플리케이션을 실행
   - H2 Embedded DB를 메모리 모드로 사용하고, 애플리케이션을 실행할 때마다 새로운 메모리 데이터베이스(testdb)가 생성되고, 애플리케이션이 종료되면 데이터베이스가 삭제
+- Docker image 빌드 시 **테스트 자동화** 구현
+- `GitHub Actions`를 이용한 CI/CD 파이프라인 구성 및 백그라운드 **배포 자동화** 구현
+- Docker를 활용한 배포 및 이에 따른 환경 설정 코드 관리 용이
+  - **[시스템 아키텍처 설계 개선]** ec2 인스턴스에서 바로 jar 파일 배포 → ec2 내의 docker를 통해 배포
 - 서비스 플로우 설명 및 Issue에 문서화한 내용을 기반으로한 피드백을 수용하여 **UX 개선**
+- `Nginx`, Let's Encrypt를 활용한 `https` 적용
 
 ## 📐 Service Architecture
 
