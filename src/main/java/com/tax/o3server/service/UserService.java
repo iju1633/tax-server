@@ -26,6 +26,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
     }
 
     // 유저 회원가입
+    @Transactional
     public void registerUser(RegisterUserDTO registerUserDTO) {
 
         if (userRepository.existsByUserId(registerUserDTO.getUserId())) {
@@ -142,6 +144,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
     }
 
     // 유저 정보 스크랩
+    @Transactional
     public void saveRefundInfo(HttpServletRequest httpServletRequest, RequestRefundDTO requestRefundDTO) {
 
         // 토큰 검증에 문제가 있는 경우 (만료 예외)
@@ -331,6 +334,16 @@ public class UserService { // 유저 관련 서비스 로직 구현
 
         // 환급 정보 반환
         return refundDTO;
+    }
+
+    // 로그아웃 (배포용)
+    public void logout() {
+
+        // Users 테이블 초기화
+        userRepository.deleteAll();
+
+        // ScrapData 테이블 초기화
+        scrapDataRepository.deleteAll();
     }
 
     // 스크랩 시 필요한 클래스 정의
