@@ -28,8 +28,11 @@
 - 유저의 정보 스크랩
 - 유저의 환급 정보 반환
   - 유저의 스크랩 정보를 바탕으로 유저의 결정세액과 퇴직연금세액공제금액을 계산하여 유저의 이름과 반환
+- 로그아웃
+  - 배포된 상태에선 웹 어플리케이션이 계속 돌아가며 docker container를 내리고 다시 실행시키기 위해선 key값이 필요하기 때문에 웹 어플리케이션을 종료시키고 다시 실행시킨 효과를 주기 위해서 구현
+  - Embeded DB에 저장되어 있는 회원 정보와 스크랩 데이터를 삭제 
 
-## 구현 방법 & 검증 결과
+## 📝 구현 방법 & 검증 결과
 - 회원가입
   - 서비스 로직
     - 회원가입에 필요한 정보(서비스 로그인 아이디, 서비스 로그인 비밀번호, 이름, 주민등록번호)가 담긴 DTO를 파라미터로 받아 엔티티 생성하여 DB에 저장
@@ -97,8 +100,13 @@
     - 토큰의 유효 기간이 지난 경우
     - 로그인한 사용자와 요청하는 사용자가 다른 경우
     - 스크랩한 환급 정보가 없거나 오류로 인해 스크랩 데이터 엔티티에 담긴 row가 2개 이상인 경우
+- 로그아웃
+  - 서비스 로직
+    - DB에 저장되어 있는 회원 정보와 스크랩 데이터를 물리적 삭제
+  - 특징
+    - 웹 어플리케이션을 종료시키고 다시 실행시킨 효과를 주기 위해서 구현
 
-## Swagger 주소
+## 🌐 Swagger 주소
 - [Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)
 * 로컬에서 빌드하고 실행시키고자 한다면, Build Method 참고 바람
 
@@ -121,9 +129,9 @@
 ## 📐 Service Architecture
 
 ## 🖥️ Build Method
-- 해당 [링크](https://cyclic-baboon-a84.notion.site/c907cb289924461b8e8e34b9fa01dc99?pvs=4)는 운영체제별(Mac, Windows) 웹서버를 로컬에서 실행시키는 방법을 설명하고 있습니다.
+- 해당 [링크](https://cyclic-baboon-a84.notion.site/c907cb289924461b8e8e34b9fa01dc99?pvs=4)는 운영체제별(Mac, Windows) 웹서버를 로컬에서 실행시키는 방법을 설명하고 있습니다.  
 or  
-- 예시 데이터가 포함된 웹서버를 **배포**해놨으니 [API Documentation Link](http://13.209.107.27:8080/swagger-ui/#/)로 구현된 기능을 **프로젝트 빌드 과정 없이** 바로 테스트해보실 수 있습니다.
+- 예시 데이터가 포함된 웹서버를 **배포**해놨으니 [Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)로 구현된 기능을 **프로젝트 빌드 과정 없이** 바로 테스트해보실 수 있습니다.
   - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
  
 ## 📝 Documentation (#Issue)
@@ -135,9 +143,9 @@ or
 <img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/3o3-server/assets/43805087/21a54ae1-312f-444d-98d0-97823d795213">
 
 ## 📃 API Documentation
-<img width="1415" alt="스크린샷 2023-07-13 오후 8 00 16" src="https://github.com/iju1633/3o3-server/assets/43805087/8db352e3-d71f-4d41-aae9-04bf3ad3398a">
+<img width="1419" alt="스크린샷 2023-07-13 오후 7 39 16" src="https://github.com/iju1633/3o3-server/assets/43805087/759bd297-261a-4f2b-b4bd-50784ebca30d">  
+
 - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
- 
 * 이 프로젝트는 클라이언트와의 통신을 위해 swagger Specification 2.0 및 Swagger UI를 활용합니다.  
 
 ## 🏛️ Depedency Used
