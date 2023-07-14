@@ -59,8 +59,9 @@
 - implementation 'org.springframework.boot:spring-boot-starter-security'
 - implementation 'org.springframework.boot:spring-boot-starter-validation'
 - implementation 'org.springframework.boot:spring-boot-starter-web'
-- implementation 'io.springfox:springfox-boot-starter:3.0.0'
-- implementation 'io.jsonwebtoken:jjwt:0.9.1'
+- implementation 'io.springfox:springfox-boot-starter:3.0.0' // swagger
+- implementation 'io.jsonwebtoken:jjwt:0.9.1' // jwt
+- implementation 'org.apache.httpcomponents:httpclient:4.5.14' // apache httpClient
 - compileOnly 'org.projectlombok:lombok'
 - runtimeOnly 'com.h2database:h2'
 - annotationProcessor 'org.projectlombok:lombok'
