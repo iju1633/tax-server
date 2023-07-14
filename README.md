@@ -7,12 +7,19 @@
 ![Spring-Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=Spring-Boot&logoColor=white)
 ![H2](https://img.shields.io/badge/H2-4479A1.svg?&style=for-the-badge&logo=H2&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-66E851?style=for-the-badge&logo=Swagger&logoColor=white)
+![EC2](https://img.shields.io/badge/Amazon_EC2-FF9900?style=for-the-badge&logo=Amazon-EC2&logoColor=white)
+![Linux](https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![GitHub_Actions](https://img.shields.io/badge/GitHub_Actions-1678D2?style=for-the-badge&logo=GithubActions&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-65AC6C?style=for-the-badge&logo=nginx&logoColor=white)
 
 ## 🛠️ Tool
 ![Git](https://img.shields.io/badge/Git-F05032.svg?&style=for-the-badge&logo=Git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-000000.svg?&style=for-the-badge&logo=Github&logoColor=white)
 ![IntelliJ IDEA](https://img.shields.io/badge/ItelliJ%20IDEA-4A93D7.svg?&style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![Notion](https://img.shields.io/badge/Notion-000000.svg?&style=for-the-badge&logo=Notion&logoColor=white)
+![FileZilla](https://img.shields.io/badge/FileZilla-000000.svg?&style=for-the-badge&logo=FileZilla&logoColor=white)
+![Draw.io](https://img.shields.io/badge/Draw.io-FF9900.svg?&style=for-the-badge&logo=Draw-io&logoColor=white)
+![Let's Encrypt](https://img.shields.io/badge/Let's_Encrypt-452B67.svg?&style=for-the-badge&logo=Let's_Encrypt&logoColor=white)
 
 ## 📖 구현한 API
 - 회원 가입
@@ -92,8 +99,8 @@
     - 스크랩한 환급 정보가 없거나 오류로 인해 스크랩 데이터 엔티티에 담긴 row가 2개 이상인 경우
 
 ## Swagger 주소
-- [Swagger Link](http://localhost:8080/swagger-ui/#/)
-- 로컬에서 빌드하고 실행시키고자할 시, Build Method 참고 바람
+- [Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)
+* 로컬에서 빌드하고 실행시키고자 한다면, Build Method 참고 바람
 
 ## 🔙 Requirements / Solution
 - 사용자가 삼쩜삼에 가입해야 합니다.
@@ -114,6 +121,10 @@
 ## 📐 Service Architecture
 
 ## 🖥️ Build Method
+- 해당 [링크](https://cyclic-baboon-a84.notion.site/c907cb289924461b8e8e34b9fa01dc99?pvs=4)는 운영체제별(Mac, Windows) 웹서버를 로컬에서 실행시키는 방법을 설명하고 있습니다.
+or  
+- 예시 데이터가 포함된 웹서버를 **배포**해놨으니 [API Documentation Link](http://13.209.107.27:8080/swagger-ui/#/)로 구현된 기능을 **프로젝트 빌드 과정 없이** 바로 테스트해보실 수 있습니다.
+  - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
  
 ## 📝 Documentation (#Issue)
 - [프로젝트 구현 조건](https://github.com/iju1633/3o3-server/issues/3)
@@ -125,6 +136,8 @@
 
 ## 📃 API Documentation
 <img width="1415" alt="스크린샷 2023-07-13 오후 8 00 16" src="https://github.com/iju1633/3o3-server/assets/43805087/8db352e3-d71f-4d41-aae9-04bf3ad3398a">
+- [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
+ 
 * 이 프로젝트는 클라이언트와의 통신을 위해 swagger Specification 2.0 및 Swagger UI를 활용합니다.  
 
 ## 🏛️ Depedency Used
