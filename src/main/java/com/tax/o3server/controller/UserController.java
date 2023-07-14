@@ -62,4 +62,13 @@ public class UserController { // rest api 정의
 
         return ResponseEntity.ok().body(userService.showUserRefundInfo(httpServletRequest));
     }
+
+    // 로그아웃 (배포용)
+    @PostMapping("/szs/logout")
+    @ApiOperation(value = "로그아웃 (배포용)", notes = "회원 정보가 담긴 테이블과 스크랩 데이터가 담긴 테이블을 비웁니다.\n웹 애플리케이션 서버를 종료 이후 다시 시작하는 효과를 주기 위합입니다.")
+    public ResponseEntity<Void> logout() {
+
+        userService.logout();
+        return ResponseEntity.ok().build();
+    }
 }
