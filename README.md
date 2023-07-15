@@ -1,6 +1,6 @@
 # 👕 2023, 삼쩜삼 JAVA 백엔드 엔지니어 채용 Assignment
 
-[Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)  
+[Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
 회원의 정보를 스크랩하여 환급 정보를 반환하는 서비스를 제공합니다.
 
 ## 💪 Skill Stack
@@ -135,7 +135,7 @@
   - [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)의 `형식` 및 `에러나는 경우에 대한 에러메시지 참고`
 
 ## 🌐 Swagger 주소
-- [Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)
+- [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)
 * 로컬에서 빌드하고 실행시키고자 한다면, Build Method 참고 바람
 
 ## 🔙 Requirements / Solution
@@ -166,7 +166,7 @@
 ## 🖥️ Build Method
 - 해당 [링크](https://cyclic-baboon-a84.notion.site/c907cb289924461b8e8e34b9fa01dc99?pvs=4)는 운영체제별(Mac, Windows) 웹서버를 로컬에서 실행시키는 방법을 설명하고 있습니다.  
 or  
-- 예시 데이터가 포함된 웹서버를 **배포**해놨으니 [Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)로 구현된 기능을 **프로젝트 빌드 과정 없이** 바로 테스트해보실 수 있습니다.
+- 예시 데이터가 포함된 웹서버를 **배포**해놨으니 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)로 구현된 기능을 **프로젝트 빌드 과정 없이** 바로 테스트해보실 수 있습니다.
   - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
  
 ## 📝 Documentation (#Issue)
@@ -180,6 +180,7 @@ or
 <img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/3o3-server/assets/43805087/21a54ae1-312f-444d-98d0-97823d795213">
 
 ## 📃 API Documentation
+[Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
 <img width="1419" alt="스크린샷 2023-07-13 오후 7 39 16" src="https://github.com/iju1633/3o3-server/assets/43805087/759bd297-261a-4f2b-b4bd-50784ebca30d">  
 
 - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
