@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class UserServiceTest {
+public class RegisterUserTest {
 
     @Mock
     private UserRepository userRepository;
@@ -149,4 +149,3 @@ public class UserServiceTest {
         verify(userRepository, never()).save(any(Users.class));
     }
 }
-
