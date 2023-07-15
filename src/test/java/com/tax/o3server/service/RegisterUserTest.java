@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class RegisterUserTest {
+public class RegisterUserTest { // 회원가입 단위 테스트
 
     @Mock
     private UserRepository userRepository;
@@ -38,7 +38,7 @@ public class RegisterUserTest {
     }
 
     @Test
-    public void testUserIdNotBlank() { // @NotBlank validation
+    public void testUserIdNotBlank() { // 회원가입 시, 아이디 빈칸
         RegisterUserDTO dto = new RegisterUserDTO();
         dto.setUserId(null);
 
@@ -47,7 +47,7 @@ public class RegisterUserTest {
     }
 
     @Test
-    public void testPasswordNotBlank() { // @NotBlank validation
+    public void testPasswordNotBlank() { // 회원가입 시, 비밀번호 빈칸
         RegisterUserDTO dto = new RegisterUserDTO();
         dto.setPassword("");
 
@@ -56,7 +56,7 @@ public class RegisterUserTest {
     }
 
     @Test
-    public void testNameNotBlank() { // @NotBlank validation
+    public void testNameNotBlank() { // 회원가입 시, 이름 빈칸
         RegisterUserDTO dto = new RegisterUserDTO();
         dto.setName(" ");
 
@@ -65,7 +65,7 @@ public class RegisterUserTest {
     }
 
     @Test
-    public void testRegNoNotBlank() { // @NotBlank validation
+    public void testRegNoNotBlank() { // 회원가입 시, 주민등록번호 빈칸
         RegisterUserDTO dto = new RegisterUserDTO();
         dto.setRegNo("");
 
@@ -73,8 +73,7 @@ public class RegisterUserTest {
         assertTrue(violations.contains("주민등록번호를 기입해주세요."));
     }
 
-    // Helper method to validate the DTO
-    private Set<String> validate(RegisterUserDTO dto) {
+    private Set<String> validate(RegisterUserDTO dto) { // @NotBlank 검증
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         return validator.validate(dto).stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
