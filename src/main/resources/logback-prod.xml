@@ -4,7 +4,7 @@
         <Property name="FILE_LOG_PATTERN">%d{yyyy-MM-dd_HH:mm} %level : %location ::: %m%n</Property>
     </Properties>
     <Appenders>
-        <RollingFile name="LogToFile" fileName="logs/3o3_server.log" filePattern="logs/%d{yyyy-MM-dd_HH}.log">
+        <RollingFile name="LogToFile" fileName="logs/tax_server.log" filePattern="logs/%d{yyyy-MM-dd_HH}.log">
             <PatternLayout pattern="${sys:FILE_LOG_PATTERN}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="4" modulate="true"/>
