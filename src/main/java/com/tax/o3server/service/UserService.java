@@ -108,7 +108,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
     // 유저 정보(아이디, 이름, 가입 날짜) 반환
     public UserDTO showUserInfo(HttpServletRequest httpServletRequest) {
 
-        // 토큰 검증에 문제가 있는 경우
+        // 토큰 검증에 문제가 있는 경우 (만료 제외)
         if (!validateToken(httpServletRequest)) {
             throw new IllegalArgumentException("토큰 인증에 실패하셨습니다. 로그인 후, 다시 인증해주세요.");
         }
@@ -149,7 +149,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
     @Transactional
     public void saveRefundInfo(HttpServletRequest httpServletRequest, RequestRefundDTO requestRefundDTO) {
 
-        // 토큰 검증에 문제가 있는 경우 (만료 예외)
+        // 토큰 검증에 문제가 있는 경우 (만료 제외)
         if (!validateToken(httpServletRequest)) {
             throw new IllegalArgumentException("토큰 인증에 실패하셨습니다. 로그인 후, 다시 인증해주세요.");
         }
@@ -209,7 +209,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
                     // status 값 확인
                     if ("success".equals(responseData.getStatus())) {
 
-                        // 엔티티에 값을 저장하는 로직을 구현해주세요.
+                        // 엔티티에 저장할 필드를 parse
                         JsonList jsonList = responseData.getData().getJsonList();
 
                         long 산출세액 = Long.parseLong(jsonList.get산출세액().replaceAll(",", ""));
