@@ -133,6 +133,7 @@
       <img width="1194" alt="스크린샷 2023-07-15 오전 10 00 40" src="https://github.com/iju1633/3o3-server/assets/43805087/8d1cc1ca-1568-40e3-ac6d-ad504c5fb0ca">
 - 요청에 대한 검증 실패의 경우
   - [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)의 `형식` 및 `에러나는 경우에 대한 에러메시지 참고`
+
 ## 🌐 Swagger 주소
 - [Swagger Link](http://13.209.107.27:8080/swagger-ui/#/)
 * 로컬에서 빌드하고 실행시키고자 한다면, Build Method 참고 바람
@@ -172,6 +173,8 @@ or
 - [프로젝트 구현 조건](https://github.com/iju1633/3o3-server/issues/3)
 - [브랜치 & 코드 & PR 관리 전략](https://github.com/iju1633/3o3-server/issues/1)
 - [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)
+- [Amazon Web Service 현황](https://github.com/iju1633/3o3-server/issues/29)
+- [Log 관리](https://github.com/iju1633/3o3-server/issues/32)
 
 ## 🗄️ ERD
 <img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/3o3-server/assets/43805087/21a54ae1-312f-444d-98d0-97823d795213">
