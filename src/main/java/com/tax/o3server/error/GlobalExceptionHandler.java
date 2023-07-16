@@ -1,7 +1,6 @@
 package com.tax.o3server.error;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,9 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.MethodNotAllowedException;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler { // controller 단에서 나는 에러를 catch
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /*
         현재 서버에서 던지는 예외 정리
