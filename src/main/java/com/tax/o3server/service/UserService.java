@@ -2,6 +2,7 @@ package com.tax.o3server.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tax.o3server.constant.JwtUtilConst;
 import com.tax.o3server.constant.RegisterConst;
 import com.tax.o3server.constant.ScrapConst;
 import com.tax.o3server.dto.*;
@@ -23,7 +24,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +42,6 @@ public class UserService { // 유저 관련 서비스 로직 구현
     private final ScrapDataRepository scrapDataRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
-    @Value("${jwt.secret}")
-    private String secret;
 
     public UserService(UserRepository userRepository, ScrapDataRepository scrapDataRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
@@ -73,15 +71,15 @@ public class UserService { // 유저 관련 서비스 로직 구현
         // dto -> entity
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 HH시 mm분");
 
-        Users newUsers = new Users();
-        newUsers.setUserId(registerUserDTO.getUserId()); // 서비스 로그인 아이디
-        newUsers.setPassword(passwordEncoder.encode(registerUserDTO.getPassword())); // 민감정보 암호화 (비밀번호)
-        newUsers.setName(name); // 유저 이름
-        newUsers.setRegNo(passwordEncoder.encode(regNo)); // 민감정보 암호화 (주민번호)
-        newUsers.setRegisterDate(formatter.format(LocalDateTime.now())); // 가입일자
+        Users newUser = new Users();
+        newUser.setUserId(registerUserDTO.getUserId()); // 서비스 로그인 아이디
+        newUser.setPassword(passwordEncoder.encode(registerUserDTO.getPassword())); // 민감정보 암호화 (비밀번호)
+        newUser.setName(name); // 유저 이름
+        newUser.setRegNo(passwordEncoder.encode(regNo)); // 민감정보 암호화 (주민번호)
+        newUser.setRegisterDate(formatter.format(LocalDateTime.now())); // 가입일자
 
         // db에 저장
-        userRepository.save(newUsers);
+        userRepository.save(newUser);
     }
 
     // 로그인
@@ -115,7 +113,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
 
         // user 객체 찾아옴
         String token = httpServletRequest.getHeader("Authorization");
-        Claims claims = decodeJwt(token, secret);
+        Claims claims = decodeJwt(token, JwtUtilConst.SECRET);
         Users user = userRepository.findByName(claims.getSubject()); // 이미 특정 정보로만 가입할 수 있기에 유일성이 확보됨
 
         // dto로 변환 후 반환
@@ -156,7 +154,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
 
         // jwt 토큰으로부터 요청자와 일치하는 지 검증
         String token = httpServletRequest.getHeader("Authorization");
-        Claims claims = decodeJwt(token, secret);
+        Claims claims = decodeJwt(token, JwtUtilConst.SECRET);
         Users user = userRepository.findByName(claims.getSubject()); // 이미 특정 정보로만 가입할 수 있기에 유일성이 확보됨
 
         // 로그인한 회원과 요청하는 회원이 다른 경우에 대한 검증
@@ -274,7 +272,7 @@ public class UserService { // 유저 관련 서비스 로직 구현
 
         // jwt 토큰으로부터 요청자와 일치하는 지 검증
         String token = httpServletRequest.getHeader("Authorization");
-        Claims claims = decodeJwt(token, secret);
+        Claims claims = decodeJwt(token, JwtUtilConst.SECRET);
         Users user = userRepository.findByName(claims.getSubject()); // 이미 특정 정보로만 가입할 수 있기에 유일성이 확보됨
 
         // 로그인한 사용자와 요청하는 사용자가 동일한지를 확인

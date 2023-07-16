@@ -29,7 +29,3 @@ spring:
       suffix: .jsp
     path match:
       matching-strategy: ant_path_matcher
-
-jwt:
-  secret: test1234567890test1234567890
-  expiration: 60000 # 1분
