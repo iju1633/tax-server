@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class JwtUtilsTest { // 토큰 관련 단위 테스트
+public class JwtUtilsTest { // JWT 토큰 관련 단위 테스트
 
     @Mock
     private JwtUtils jwtUtils;

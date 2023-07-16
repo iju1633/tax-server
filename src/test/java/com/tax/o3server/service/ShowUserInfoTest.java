@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ShowUserInfoTest { // 유저 정보 반환 단위 테스트
+public class ShowUserInfoTest { // 회원 정보 반환 관련 단위 테스트
 
     @InjectMocks
     private UserService userService;

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class LoginTest { // 로그인 단위 테스트
+public class LoginTest { // 로그인 관련 단위 테스트
 
     @Mock
     private UserRepository userRepository;

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class RegisterUserTest { // 회원가입 단위 테스트
+public class RegisterUserTest { // 회원가입 관련 단위 테스트
 
     @Mock
     private UserRepository userRepository;
