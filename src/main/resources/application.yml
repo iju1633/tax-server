@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: prod
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb   # 애플리케이션을 실행할 때마다 데이터베이스가 임시로 생성 (프로젝트를 실행할 때 별도의 데이터베이스 설정이 필요하지 않음)
@@ -28,3 +30,8 @@ spring:
       suffix: .jsp
     path match:
       matching-strategy: ant_path_matcher
+
+logging:
+  config: classpath:logback-${spring.profiles.active}.xml
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
