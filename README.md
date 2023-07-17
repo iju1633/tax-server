@@ -39,6 +39,13 @@
   - 배포된 상태에선 웹 애플리케이션 서버가 계속 돌아가며, docker container를 내리고 다시 실행시키기 위해선 key 값이 필요하기 때문에 웹 애플리케이션 서버를 종료시키고 다시 실행시킨 효과를 주기 위해서 구현
   - Embeded DB에 저장되어 있는 회원 정보와 스크랩 데이터를 삭제 
 
+## 📝 Documentation (#Issue)
+- [프로젝트 구현 조건](https://github.com/iju1633/3o3-server/issues/3)
+- [브랜치 & 코드 & PR 관리 전략](https://github.com/iju1633/3o3-server/issues/1)
+- [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)
+- [Amazon Web Service 현황](https://github.com/iju1633/3o3-server/issues/29)
+- [Log 관리](https://github.com/iju1633/3o3-server/issues/32)
+
 ## 📝 구현 방법 & 검증 결과
 - 회원가입
   - 서비스 로직
@@ -137,7 +144,7 @@
 
 ## 🌐 Swagger 주소
 - [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)
-* 로컬에서 빌드하고 실행시키고자 한다면, Build Method 참고 바람
+* 로컬에서 빌드하고 실행시키고자 한다면, [Build Method](#-build-method) 참고할 것 
 
 ## 🔙 Requirements / Solution
 - 사용자가 삼쩜삼에 가입해야 합니다.
@@ -170,13 +177,6 @@
 or  
 - 예시 데이터가 포함된 웹서버를 **배포**해놨으니 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)로 구현된 기능을 **프로젝트 빌드 과정 없이** 바로 테스트해보실 수 있습니다.
   - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
- 
-## 📝 Documentation (#Issue)
-- [프로젝트 구현 조건](https://github.com/iju1633/3o3-server/issues/3)
-- [브랜치 & 코드 & PR 관리 전략](https://github.com/iju1633/3o3-server/issues/1)
-- [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)
-- [Amazon Web Service 현황](https://github.com/iju1633/3o3-server/issues/29)
-- [Log 관리](https://github.com/iju1633/3o3-server/issues/32)
 
 ## 🗄️ ERD
 <img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/3o3-server/assets/43805087/21a54ae1-312f-444d-98d0-97823d795213">
