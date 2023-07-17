@@ -144,7 +144,7 @@
 
 ## 🌐 Swagger 주소
 - [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)
-* 로컬에서 빌드하고 실행시키고자 한다면, [Build Method](#-build-method) 참고할 것 
+* 로컬에서 빌드하고 실행시키고자 한다면, [🖥️ Build Method](#-build-method)를 참고할 것 
 
 ## 🔙 Requirements / Solution
 - 사용자가 삼쩜삼에 가입해야 합니다.
