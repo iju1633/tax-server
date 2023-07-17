@@ -13,7 +13,7 @@
 - [🔙 Requirements / Solution](#-requirements--solution)
 - [💎 Main Features](#-main-features)
 - [📐 Service Architecture](#-service-architecture)
-- [🖥️ Build Method](#-build-method)
+- [🖥️ Build Method](#%EF%B8%8F-build-method)
 - [🗄️ ERD](#%EF%B8%8F-erd)
 - [📃 API Documentation](#-api-documentation)
 - [🏛️ Depedency Used](#%EF%B8%8F-depedency-used)
