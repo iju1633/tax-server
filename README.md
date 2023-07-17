@@ -5,7 +5,7 @@
 
 ## Table of Contents
 - [💪 Skill Stack](#-skill-stack)
-- [🛠️ Tool](#️%EF%B8%8F-tool)
+- [🛠️ Tool](#️-tool)
 - [📖 구현한 API](#-구현한-api)
 - [📝 Documentation (#Issue)](#-documentation-issue)
 - [📝 구현 방법 & 검증 결과](#-구현-방법--검증-결과)
@@ -13,7 +13,7 @@
 - [🔙 Requirements / Solution](#-requirements--solution)
 - [💎 Main Features](#-main-features)
 - [📐 Service Architecture](#-service-architecture)
-- [🖥️ Build Method](#️%EF%B8%8F-build-method)
+- [🖥️ Build Method](#-build-method)
 - [🗄️ ERD](#%EF%B8%8F-erd)
 - [📃 API Documentation](#-api-documentation)
 - [🏛️ Depedency Used](#%EF%B8%8F-depedency-used)
