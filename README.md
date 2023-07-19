@@ -1,4 +1,4 @@
-# 👕 2023, 세금 환급 정산 서비스
+# 👕 세금 환급 정산 서비스
 
 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
 회원의 정보를 스크랩하여 환급 정보를 반환하는 서비스를 제공합니다.
@@ -206,18 +206,19 @@ or
 ## 🏛️ Depedency Used
 - implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 - implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+- implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 - implementation 'org.springframework.boot:spring-boot-starter-security'
 - implementation 'org.springframework.boot:spring-boot-starter-validation'
 - implementation 'org.springframework.boot:spring-boot-starter-web'
-- implementation 'io.springfox:springfox-boot-starter:3.0.0' // swagger
-- implementation 'io.jsonwebtoken:jjwt:0.9.1' // jwt
-- implementation 'org.apache.httpcomponents:httpclient:4.5.14' // apache httpClient
+- implementation 'io.springfox:springfox-boot-starter:3.0.0'
+- implementation 'io.jsonwebtoken:jjwt:0.9.1'
+- implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 - compileOnly 'org.projectlombok:lombok'
 - runtimeOnly 'com.h2database:h2'
 - annotationProcessor 'org.projectlombok:lombok'
 - testImplementation 'org.springframework.boot:spring-boot-starter-test'
 - testImplementation 'org.springframework.security:spring-security-test'
-  
+
 #### Contributor
 
 [Jaeuk Im](https://github.com/iju1633)
