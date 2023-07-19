@@ -42,7 +42,7 @@ public class SwaggerConfig { // Swagger 설정 관리
 
     private Info apiInfo() { // API 문서의 제목과 설명을 설정
         return new Info()
-                .title("삼쩜삼")
+                .title("세금 환급 서비스")
                 .description("로그인 성공 시 토큰을 생성되어 Authorize라 쓰인 초록색 버튼에 token 값을 입력해 인증을 진행합니다.\n" +
                         "token의 지속시간은 1분입니다."
                 );
@@ -63,7 +63,7 @@ public class SwaggerConfig { // Swagger 설정 관리
 
     private ApiInfo swaggerInfo() { // 스웨거 문서의 제목, 설명, 버전 설정
         return new ApiInfoBuilder()
-                .title("3o3-server API Documentation")
+                .title("tax-server API Documentation")
                 .description("SpringBoot로 개발한 웹 프로젝트입니다.")
                 .version("1.0")
                 .build();
