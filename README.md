@@ -1,4 +1,4 @@
-# 👕 세금 환급 정산 서비스
+# 💳 세금 환급 정산 서비스
 
 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
 회원의 정보를 스크랩하여 환급 정보를 반환하는 서비스를 제공합니다.
