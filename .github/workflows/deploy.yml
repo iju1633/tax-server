@@ -20,9 +20,9 @@ jobs:
           host: ${{ secrets.EC2_PUBLIC_IP }}
           username: ${{ secrets.SSH_USER }}
           script: |
-            sudo docker stop 3o3-server-container # 실행 중인 도커 컨테이너 중지
-            sudo docker rm 3o3-server-container # 기존 도커 컨테이너 삭제
-            cd 3o3-server
+            sudo docker stop tax-server-container # 실행 중인 도커 컨테이너 중지
+            sudo docker rm tax-server-container # 기존 도커 컨테이너 삭제
+            cd tax-server
             git pull # 코드 갱신
-            sudo docker build -t 3o3-server:latest . # 도커 이미지 빌드
-            sudo docker run -d --name 3o3-server-container -p 8080:8080 3o3-server:latest # 도커 컨테이너 생성 및 백그라운드로 배포
+            sudo docker build -t tax-server:latest . # 도커 이미지 빌드
+            sudo docker run -d --name tax-server-container -p 8080:8080 tax-server:latest # 도커 컨테이너 생성 및 백그라운드로 배포
