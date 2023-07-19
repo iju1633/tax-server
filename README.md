@@ -198,7 +198,7 @@ or
 
 ## 📃 API Documentation
 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
-<img width="1419" alt="스크린샷 2023-07-13 오후 7 39 16" src="https://github.com/iju1633/3o3-server/assets/43805087/759bd297-261a-4f2b-b4bd-50784ebca30d">  
+<img width="1437" alt="스크린샷 2023-07-19 오후 7 28 11" src="https://github.com/iju1633/tax-server/assets/43805087/d26ccba7-520a-4a98-831c-550520f4e4b7">  
 
 - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
 * 이 프로젝트는 클라이언트와의 통신을 위해 swagger Specification 2.0 및 Swagger UI를 활용합니다.  
