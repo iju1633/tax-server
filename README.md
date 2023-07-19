@@ -55,7 +55,7 @@
   - Embeded DB에 저장되어 있는 회원 정보와 스크랩 데이터를 삭제 
 
 ## 📝 Documentation (#Issue)
-- [프로젝트 구현 조건](https://github.com/iju1633/3o3-server/issues/3)
+- [프로젝트 특징](https://github.com/iju1633/3o3-server/issues/3)
 - [브랜치 & 코드 & PR 관리 전략](https://github.com/iju1633/3o3-server/issues/1)
 - [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)
 - [Amazon Web Service 현황](https://github.com/iju1633/3o3-server/issues/29)
