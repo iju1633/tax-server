@@ -1,4 +1,4 @@
-# 👕 2023, 삼쩜삼 JAVA 백엔드 엔지니어 채용 Assignment
+# 👕 2023, 세금 환급 정산 서비스
 
 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
 회원의 정보를 스크랩하여 환급 정보를 반환하는 서비스를 제공합니다.
