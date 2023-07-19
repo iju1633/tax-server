@@ -72,9 +72,6 @@
     - 파라미터로 받은 DTO에 하나의 속성이라도 null 값이 있는 경우 
     - 요구 사항에 적힌 유저 회원가입 가능 정보와 일치하지 않는 경우
     - 이미 회원가입된 정보로 회원가입을 시도하는 경우
-  - 검증 결과 (요청 성공)
-    - 코드 200 반환 
-     <img width="1193" alt="스크린샷 2023-07-15 오전 9 52 33" src="https://github.com/iju1633/3o3-server/assets/43805087/e545044a-84da-474f-a71b-c5211852db51">
 - 로그인
   - 서비스 로직
     - 로그인에 필요한 정보(서비스 로그인 아이디, 서비스 로그인 비밀번호)가 담긴 DTO를 파라미터로 받아 사용자 인증 후, JWT 토큰을 생성하고 이를 DTO에 담아 반환
@@ -87,9 +84,6 @@
     - 파라미터로 받은 DTO에 하나의 속성이라도 null 값이 있는 경우 
     - 파라미터로 받은 정보로 유저 조회가 안되는 경우
     - 계정 정보 불일치 시
-  - 검증 결과 (요청 성공)
-    - 코드 200 반환하며 토큰 반환
-      <img width="1198" alt="스크린샷 2023-07-15 오전 9 54 46" src="https://github.com/iju1633/3o3-server/assets/43805087/435c0405-b71a-457c-bf57-7b0530a4d6d4">
 - 회원 정보 반환
   - 서비스 로직
     - 로그인 성공 시 반환된 JWT 토큰을 헤더에 넣어 요청하면 토큰과 키값으로부터 유저이름, 토큰 생성 시간, 토큰 만료 시간을 갖는 `Claims`를 사용하여 유저 객체를 DB에서 가져와 DTO로 변환 후 반환 
@@ -101,12 +95,8 @@
   - 예외 상황
     - 토큰이 형식이 이상한 경우
     - 토큰의 유효 기간이 지난 경우
-  - 검증 결과 (요청 성공)
-    - 코드 200 반환하며 서비스 로그인 아이디, 이름, 가입 일시를 반환
-      <img width="1194" alt="스크린샷 2023-07-15 오전 9 56 40" src="https://github.com/iju1633/3o3-server/assets/43805087/1309e818-b421-4399-9a03-e27ebdbe0310">
 - 유저의 정보 스크랩
-  - 서비스 로직  
-    <img width="660" alt="스크린샷 2023-07-04 오후 2 59 06" src="https://github.com/iju1633/3o3-server/assets/43805087/a4d4dffe-89fc-4343-a8a5-84ce97340e90" width="400" height="800">  
+  - 서비스 로직
     - 스크랩 시 필요한 정보(이름, 주민등록번호)가 담긴 DTO와 로그인 성공 시 반환된 JWT 토큰을 헤더에 넣어 요청하면 토큰과 키값으로부터 유저이름, 토큰 생성 시간, 토큰 만료 시간을 갖는 `Claims`를 사용하여 사용자 인증 후, 파라미터로 받은 DTO로 외부 API 요청 시 필요한 JSON 형식의 데이터 생성 이후, `HttpClient`를 활용하여 POST 요청 후, 응답받은 데이터 중 `산출세액`, `총급여`, `보험료납입금액`, `교육비납입금액`, `기부금납입금액`, `의료비납입금액`, `퇴직연금납입금액` 값을 parsing하여 엔티티에 담아 DB에 저장
   - 특징
     - 외부 API의 base url은 상수로 관리
@@ -127,9 +117,6 @@
     - 외부 API 요청 이후 응답 데이터의 status 필드 값이 `"fail"`인 경우
     - 외부 API 요청 이후 응답 데이터가 없어 `IOException`이 발생하는 경우
     - 외부 API 요청 후, `statusCode`가 200이 아닌 경우
-  - 검증 결과 (요청 성공)
-    - 코드 200 반환
-      <img width="1196" alt="스크린샷 2023-07-15 오전 9 58 36" src="https://github.com/iju1633/3o3-server/assets/43805087/afc83456-b655-4930-9fba-f2caf451c2a8">
 - 유저의 환급 정보 반환
   - 서비스 로직
     - 로그인 성공 시 반환된 JWT 토큰을 헤더에 넣어 요청하면 토큰과 키값으로부터 유저이름, 토큰 생성 시간, 토큰 만료 시간을 갖는 `Claims`를 사용하여 사용자 검증을 거친 후 스크랩 시 DB에 저장한 필드 값을 가져와 요구 사항에 명시된 계산식을 활용하여 계산 이후 반환할 환급 정보(이름, 결정세액, 퇴직연금세액공제금액)를 DTO에 담아 반환
@@ -143,17 +130,11 @@
     - 토큰의 유효 기간이 지난 경우
     - 로그인한 사용자와 요청하는 사용자가 다른 경우
     - 스크랩한 환급 정보가 없거나 오류로 인해 스크랩 데이터 엔티티에 담긴 row가 2개 이상인 경우
-  - 검증 결과 (요청 성공)
-    - 코드 200 반환하며 이름과 결정세액과 퇴직연금세액공제금액 반환
-      <img width="1192" alt="스크린샷 2023-07-15 오전 9 59 31" src="https://github.com/iju1633/3o3-server/assets/43805087/c92b234f-9cde-42c7-9d2b-1f2159d06f35">
 - 로그아웃
   - 서비스 로직
     - DB에 저장되어 있는 회원 정보와 스크랩 데이터를 물리적 삭제
   - 특징
     - 웹 애플리케이션 서버를 종료 이후 다시 실행시킨 효과를 주기 위해서 구현
-  - 검증 결과 (요청 성공)
-    - 코드 200 반환
-      <img width="1194" alt="스크린샷 2023-07-15 오전 10 00 40" src="https://github.com/iju1633/3o3-server/assets/43805087/8d1cc1ca-1568-40e3-ac6d-ad504c5fb0ca">
 - 요청에 대한 검증 실패의 경우
   - [에러 핸들링](https://github.com/iju1633/3o3-server/issues/2)의 `형식` 및 `에러나는 경우에 대한 에러메시지 참고`
 
@@ -162,7 +143,7 @@
 * 로컬에서 빌드하고 실행시키고자 한다면, [🖥️ Build Method](#%EF%B8%8F-build-method)를 참고할 것 
 
 ## 🔙 Requirements / Solution
-- 사용자가 삼쩜삼에 가입해야 합니다.
+- 사용자가 서비스에 가입해야 합니다.
   - 회원 가입 API 제공  
 - 가입한 유저의 정보를 스크랩 하여 환급액이 있는지 조회합니다.
   - 유저의 정보를 스크랩하여 환급액 계산에 필요한 속성을 DB에 저장
@@ -185,7 +166,7 @@
 - `Nginx`, `Let's Encrypt`를 활용한 `https` 적용
 
 ## 📐 Service Architecture
-<img width="350" alt="스크린샷 2023-07-04 오후 2 59 06" src="https://github.com/iju1633/3o3-server/assets/43805087/781b36d1-233c-4df8-8764-eee361e5b254" width="200" height="400">
+<img width="350" alt="스크린샷 2023-07-04 오후 2 59 06" src="https://github.com/iju1633/tax-server/assets/43805087/40abaa68-e45d-4d5e-8585-c38466e7cc01" width="200" height="400">
 
 ## 🖥️ Build Method
 - 해당 [링크](https://cyclic-baboon-a84.notion.site/c907cb289924461b8e8e34b9fa01dc99?pvs=4)는 운영체제별(Mac, Windows) 웹서버를 로컬에서 실행시키는 방법을 설명하고 있습니다.  
@@ -194,11 +175,11 @@ or
   - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
 
 ## 🗄️ ERD
-<img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/3o3-server/assets/43805087/21a54ae1-312f-444d-98d0-97823d795213">
+<img width="433" alt="스크린샷 2023-07-13 오후 8 20 18" src="https://github.com/iju1633/tax-server/assets/43805087/30361a10-a952-4229-903e-6b834847bbf1">
 
 ## 📃 API Documentation
 [Swagger Link](https://tax-server.kro.kr/swagger-ui/#/)  
-<img width="1437" alt="스크린샷 2023-07-19 오후 7 28 11" src="https://github.com/iju1633/tax-server/assets/43805087/d26ccba7-520a-4a98-831c-550520f4e4b7">  
+<img width="1437" alt="스크린샷 2023-07-19 오후 7 28 11" src="https://github.com/iju1633/tax-server/assets/43805087/256413b7-0415-48a9-80ef-e372d7b4d026">
 
 - [테스트 방법 가이드](https://cyclic-baboon-a84.notion.site/c72c5c02c725464bb9998d02d9bc00d5?pvs=4)
 * 이 프로젝트는 클라이언트와의 통신을 위해 swagger Specification 2.0 및 Swagger UI를 활용합니다.  
